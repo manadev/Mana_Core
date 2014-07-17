@@ -1,0 +1,10 @@
+{
+    "name": "manadev/Mana_Core",
+    "type": "magento-module",
+    "description": "",
+    "license": "",
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    },
+    "minimum-stability": "dev"
+}
