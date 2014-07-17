@@ -1,0 +1,10 @@
+{
+    "name": "manadev/Mana_Core",
+    "type": "magento-module",
+    "description": "Core library",
+    "license": "OSL-3.0",
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    },
+    "minimum-stability": "dev"
+}
