@@ -17,6 +17,7 @@ backend/layout.xml                              app/design/adminhtml/default/def
 backend/template                                app/design/adminhtml/default/default/template/mana/core
 backend/css/styles.css                          skin/adminhtml/default/default/css/mana_core.css
 backend/images                                  skin/adminhtml/default/default/images/mana_core
+backend/lib/jstree                              skin/adminhtml/default/default/lib/jstree
 jquery/scripts                                  js/jquery
 jquery/frontend                                 skin/frontend/base/default/css/jquery
 jquery/backend                                  skin/adminhtml/default/default/css/jquery
