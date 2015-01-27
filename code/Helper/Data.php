@@ -12,6 +12,10 @@
  */
 class Mana_Core_Helper_Data extends Mage_Core_Helper_Abstract {
     protected $_pageTypes;
+    /**
+     * @var Mage_Catalog_Model_Category
+     */
+    protected $_rootCategory;
 
     /**
      * Retrieve config value for store by path. By default uses standard Magento function to query core_config_data
@@ -546,6 +550,17 @@ class Mana_Core_Helper_Data extends Mage_Core_Helper_Abstract {
         }
     }
 
+    public function setProtectedProperty($object, $propertyName, $value) {
+        $className = get_class($object);
+        $class = new ReflectionClass($className);
+        $property = $class->getProperty($propertyName);
+        if (method_exists($property, 'setAccessible')) {
+            $property->setAccessible(true);
+            $property->setValue($object, $value);
+        }
+    }
+
+
     public function base64EncodeUrl($url) {
         return base64_encode(Mage::getSingleton('core/url')->sessionUrlVar($url));
     }
@@ -738,6 +753,10 @@ class Mana_Core_Helper_Data extends Mage_Core_Helper_Abstract {
         return $this->isModuleEnabled('Mana_Filters');
     }
 
+    public function isManadevLayeredNavigationCheckboxesInstalled() {
+        return $this->isModuleEnabled('ManaPro_FilterCheckboxes');
+    }
+
     public function isManadevSeoLayeredNavigationInstalled() {
         return $this->isModuleEnabled('ManaPro_FilterSeoLinks');
     }
@@ -748,6 +767,10 @@ class Mana_Core_Helper_Data extends Mage_Core_Helper_Abstract {
 
     public function isManadevAttributePageInstalled() {
         return $this->isModuleEnabled('Mana_AttributePage');
+    }
+
+    public function isManadevSortingInstalled() {
+        return $this->isModuleEnabled('Mana_Sorting');
     }
 
     public function isManadevLayeredNavigationTreeInstalled() {
@@ -766,6 +789,18 @@ class Mana_Core_Helper_Data extends Mage_Core_Helper_Abstract {
 
     public function isEnterpriseUrlRewriteInstalled() {
         return $this->isModuleEnabled('Enterprise_UrlRewrite');
+    }
+
+    public function isSpecialPagesInstalled() {
+        return $this->isModuleEnabled('Mana_Page');
+    }
+
+    public function isManadevCMSProInstalled() {
+        return $this->isModuleEnabled('ManaPro_Content');
+    }
+
+    public function isManadevCMSInstalled() {
+        return $this->isModuleEnabled('Mana_Content');
     }
 
     protected $_accentTranslations = array(
@@ -892,4 +927,14 @@ class Mana_Core_Helper_Data extends Mage_Core_Helper_Abstract {
         return $this;
     }
 
+    public function getRootCategory() {
+        if (!$this->_rootCategory) {
+            $this->_rootCategory = Mage::getModel('catalog/category');
+            $this->_rootCategory
+                ->setStoreId(Mage::app()->getStore()->getId())
+                ->load(Mage::app()->getStore()->getRootCategoryId());
+
+        }
+        return $this->_rootCategory;
+    }
 }
