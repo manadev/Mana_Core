@@ -1027,7 +1027,8 @@ function ($, layout, json, core, config, undefined)
             if (options.showWait) {
                 page.hideWait();
             }
-            if (options.showDebugMessages) {
+            // When the request fails (let's say no internet), the status is `0` and no responseText. So, do not alert.
+            if (options.showDebugMessages && error.status > 0) {
                 alert(error.status + (error.responseText ? ': ' + error.responseText : ''));
             }
         },
@@ -1617,12 +1618,13 @@ Mana.require(['jquery'], function($) {
 	}
 
 	$.fn.mMarkAttr = function (attr, condition) {
-		if (condition) {
-			this.attr(attr, attr);
-		}
-		else {
-			this.removeAttr(attr);
-		}
+	    this.prop(attr, condition);
+		//if (condition) {
+		//	this.attr(attr, attr);
+		//}
+		//else {
+		//	this.removeAttr(attr);
+		//}
 		return this;
 	}; 
 	// the following function is executed when DOM ir ready. If not use this wrapper, code inside could fail if
